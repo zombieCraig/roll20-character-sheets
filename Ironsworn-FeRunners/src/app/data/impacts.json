@@ -1,0 +1,39 @@
+[
+  {
+    "title": "misfortunes",
+    "list": [
+      { "type": "checkbox", "attribute": "impactWounded", "translationId": "impact-wounded", "pure_attr": true },
+      { "type": "checkbox", "attribute": "impactShaken", "translationId": "impact-shaken", "pure_attr": true },
+      { "type": "checkbox", "attribute": "impactUnregulated", "translationId": "impact-Unregulated", "pure_attr": true }
+    ]
+  },
+  {
+    "title": "lasting effects",
+    "list": [
+      { "type": "checkbox", "attribute": "impactPermanentlyHarmed", "translationId": "impact-permanently-harmed", "pure_attr": true },
+      { "type": "checkbox", "attribute": "impactTraumatized", "translationId": "impact-traumatized", "pure_attr": true }
+    ]
+  },
+  {
+    "title": "burdens",
+    "list": [
+      { "type": "checkbox", "attribute": "impactDoomed", "translationId": "impact-doomed", "pure_attr": true },
+      { "type": "checkbox", "attribute": "impactTormented", "translationId": "impact-tormented", "pure_attr": true },
+      { "type": "checkbox", "attribute": "impactIndebted", "translationId": "impact-indebted", "pure_attr": true }
+    ]
+  },
+  {
+    "title": "current rig",
+    "list": [
+      { "type": "checkbox", "attribute": "impactOverheated", "translationId": "impact-overheated", "pure_attr": true },
+      { "type": "checkbox", "attribute": "impactInfected", "translationId": "impact-infected", "pure_attr": true }
+    ]
+  },
+  {
+    "title": "rig",
+    "list": [
+      { "type": "checkbox", "attribute": "impactRigOverheated", "translationId": "impact-overheated", "pure_attr": true },
+      { "type": "checkbox", "attribute": "impactRigInfected", "translationId": "impact-infected", "pure_attr": true }
+    ]
+  }
+]

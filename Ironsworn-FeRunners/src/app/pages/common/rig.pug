@@ -1,0 +1,52 @@
+include ../../components/assets/asset-builder
+
+-
+  var
+    rigCategories = {
+      modules: {
+        "type": "checkbox",
+        "attribute": "rig-modules",
+        "translationId": "rig-modules",
+        "classes": "rig-btn"
+      },
+      impacts: {
+        "type": "checkbox",
+        "attribute": "rig-impacts",
+        "translationId": "rig-impacts",
+        "classes": "rig-btn"
+      }
+    }
+
+mixin rigPage(sheetType)
+  div.page-container
+    input(type='radio' name=`attr_${sheetType}_page` class='rig hide-element' value='8')
+    div.rig.showhide
+      .rig-grid
+        .asset.surface
+          - const baseRig = core.assets.rig.contents.base_rig
+          +assetTemplate(baseRig, { classes: 'visible', standalone: true })
+        .rig-category-info.surface
+          if sheetType === 'character'
+            .jacked_in
+              +btn({
+                type: "checkbox",
+                attribute: "jacked_in_check_rig",
+                translationId: "rig-jacked_in",
+                classes: 'rig-jacked_in'
+              })
+          h3.i18n-text(data-i18n='resource-rig-integrity')=translation['resource-rig-integrity']
+          .info
+            +track(baseRig.controls.integrity, `${sheetType}_rig`)
+          h3.i18n-text(data-i18n='impacts')=translation['impacts']
+          .info
+            - const rigImpacts = baseRig.controls.integrity.controls
+            +impacts(rigImpacts, {character: true, noContainer: true})
+
+        .rig-category-modules
+          h3.i18n-text(data-i18n='rig-modules')=translation['rig-modules']
+          fieldset.repeating_module-assets
+            //- var assetsArray = assets.find(obj => obj["Name"] == 'Module' ).Assets
+            - var assetsArray = core.assets.module.contents
+            .asset.surface
+              +genericAssetBuilder(assetsArray, 'moduleList')
+              +customAssets

@@ -1,0 +1,47 @@
+include ./mixins/move-builder
+include ../generic/listGroup
+
+mixin moveGroup(group_data, group_key)
+  - var title_i18n = `move-group-title-${group_key}`.replace(/_/g, "-")
+  //- var moveList = core.moves.filter(obj => { return obj["Category"] === translation[title_i18n] })
+  +listGroup(title_i18n)
+    each move, move_key in group_data.contents
+      - const moveShortId = move_key.replace(/_/g, "-")
+      - const moveId = `move-${moveShortId}`
+      +listGroupItem()
+        +moveListButton(move)
+        label.move.toggle-btn
+          input(type='radio' class=`hide-element selected-move ${moveId}` name='attr_selected_move' value=move.name)
+          //- const shortId = move.id.replace(/move-/i, "")
+          - const shortId = move_key.replace(/_/g, "-")
+          - const moveKey = `move-title-${shortId}`
+          span.move-name.btn-content.i18n-text(data-i18n=moveKey) !{translation[moveKey]}
+
+input(type='radio' class='hide-element full-move-list' name='attr_move_view' value='1' checked)
+.full-move-list.showhide
+  //- List of Moves
+  .list-group-container
+    input(type='radio' class='hide-element' name='attr_selected_move')
+    each group_data, group_key in core.moves
+      +moveGroup(group_data, group_key)
+
+      //- Stupid way for me to generate orcale ccs
+      //- - console.log(`input[type=radio].${move.id}:checked ~ div.${move.id},`)
+
+//- Move Details
+input(type='radio' class='hide-element move-preview' name='attr_move_view' value='2')
+.move-preview.showhide
+  .preview-bar
+    .close-bar
+      label.close-preview.surface
+        span.i18n-text(data-i18n='close-preview')=translation['close-preview']
+        input(type='checkbox' class='hide-element' name='attr_close_move_preview')
+  .preview-container
+    .scrollable-list-groups.list-group-container
+      each group_data, group_key in core.moves
+        +moveGroup(group_data, group_key)
+    //- Move Previews
+    .move-preview-container
+      each group_data, group_key in core.moves
+        each move_data, move_key in group_data.contents
+          +movePreviewFactory(move_data, move_key)

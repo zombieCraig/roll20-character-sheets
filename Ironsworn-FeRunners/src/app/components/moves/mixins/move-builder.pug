@@ -1,0 +1,50 @@
+include ./container
+include ../../oracles/mixins/oracle-table
+include ../../oracles/mixins/oracle-roll-btn
+
+mixin movePreviewFactory(move, move_key, options)
+  +container(move, move_key, options)
+    .rules-text !{move.text}
+    if move.oracles
+      .move-oracle-container
+        - let btnText = `Roll the ${move.name} oracle`
+        - //var moveOracle = oracles.find(group => { return group.Name === 'Moves' }).Oracles.find(oracle => { return oracle.Name === move.name })
+        each oracle_data, oracle_name in move.oracles
+          if oracle_data.oracle_type == "table_text"
+            +oracleSingleButton(oracle_data, btnText)
+            +oracleTable(oracle_data)
+          // TODO: Support more complex oracles
+          //- else if moveOracle.Oracles
+          //-   +oracleMultiBtn(moveOracle)
+          //-   +oracleMultiSubTable(moveOracle, btnText)
+
+mixin movePreview(move, move_key, options)
+  if options.no_title
+    div
+  else
+    div.move-title.move-preview=move.Name
+      if move.roll_type == "progress_roll"
+        span.move-progress-label='Progress Move'
+  - const statCheck = move.trigger.conditions.find(condition => { return condition.roll_options.stat })
+  if move.roll_type == "progress_roll"
+    +rollLabel
+      +progressRoll(move, 'hide-element')
+  else if statCheck
+    +rollLabel
+      +movesRoll(move, 'hide-element')
+  .move-description
+    block
+  .oracle-footer.move-page-footer=move._source.page
+
+mixin container(move, move_key, options = false)
+  - const moveShortId = move_key.replace(/_/g, "-")
+  - const moveId = `move-${moveShortId}`
+  if options.visibility
+    div.move-visible.surface
+      +movePreview(move, move_key, options)
+        block
+  else
+    input(type='radio' name='attr_move_preview' class=`${moveId} hide-element` value=move.name)
+    div(class=`${moveId} surface showhide`)
+      +movePreview(move, move_key, options)
+        block
