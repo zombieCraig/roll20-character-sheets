@@ -1,9 +1,9 @@
-mixin oracleRoll(id, table, row, index)
+mixin oracleRoll(id, table, row)
   -
     //- appends any Assets or Details info to the row
-    var chanceFloor = row.Floor
-    var chanceCeiling = row.Ceiling;
-    const result = translation[row.$id]
+    var chanceFloor = row.roll.min
+    var chanceCeiling = row.roll.max;
+    const result = translation[row._id]
   if chanceFloor === chanceCeiling
     | {{#rollTotal() #{id} #{chanceCeiling}}}
     |
@@ -18,28 +18,29 @@ mixin oracleRoll(id, table, row, index)
     |
     | {{/rollBetween() #{id} #{chanceFloor} #{chanceCeiling}}}
 
-mixin oracleTemplate(oracle)
-  - const id = oracle.$id;
+mixin oracleTemplate(oracle, oracle_id)
+  - const id = oracle_id;
   |
   | {{##{id}}}
   .sheet-result-row
     .sheet-oracle-dice
       span {{#{id}}}
     .sheet-oracle-table-text
-      if oracle.Table
-        each row, index in oracle.Table
-          +oracleRoll(id, oracle.Table, row, index)
-      else if oracle.Tables
-        each subtable, index in oracle.Tables
-          |
-          | {{#rollTotal() tableChoice #{index}}}
-          each row, index in subtable.Table
-            +oracleRoll(id, subtable.Table, row, index)
-            |
-          | {{/rollTotal() tableChoice #{index}}}
+      if oracle.rows
+        each row in oracle.rows
+          +oracleRoll(id, oracle.rows, row)
+      //- else if oracle.Tables
+      //-   each subtable, index in oracle.Tables
+      //-     |
+      //-     | {{#rollTotal() tableChoice #{index}}}
+      //-     each row, index in subtable.Table
+      //-       +oracleRoll(id, subtable.Table, row, index)
+      //-       |
+      //-     | {{/rollTotal() tableChoice #{index}}}
       else if oracle.Oracles
         - let counter = 0;
         //- uses a counter instead of index to better handle any nested subtables
+        - console.log("WARNING: I don't think we have oracle.Oracles done yet... ", oracle_id)
         each subCatOracle in oracle.Oracles
           if subCatOracle.Table
             |
@@ -58,13 +59,15 @@ mixin oracleTemplate(oracle)
                 |
               | {{/rollTotal() tableChoice #{counter}}}
               - counter++
+      else
+        - console.log("Warning parsed", oracle_id, "without detecting rows")
 
 
 
   |
   | {{/#{id}}}
 
-rolltemplate(class=`sheet-rolltemplate-starforged_oracles`)
+rolltemplate(class=`sheet-rolltemplate-ferunners_oracles`)
   .sheet-roll-container
     .sheet-subheader {{header}}
     | {{#custom-oracle}}
@@ -72,9 +75,9 @@ rolltemplate(class=`sheet-rolltemplate-starforged_oracles`)
       .sheet-oracle-table-text {{custom-oracle}}
     | {{/custom-oracle}}
 
-    each category in core.oracles
-      each oracle in category.contents
-        +oracleTemplate(oracle)
+    each category, category_id in core.oracles
+      each oracle, oracle_id in category.contents
+        +oracleTemplate(oracle, oracle_id)
         if oracle.collections
-          each subCategory in oracle.collections
-            +oracleTemplate(subCategory)
+          each subCategory, subCategory_id in oracle.collections
+            +oracleTemplate(subCategory, subCategory_id)

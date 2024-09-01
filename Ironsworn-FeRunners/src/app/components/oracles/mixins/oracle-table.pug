@@ -83,5 +83,7 @@ mixin oracleTableRow(table, row)
     each range in ranges
       td.oracle-roll!=range
     //- td.oracle-result!=resultString(row)
-    td.oracle-result(data-i18n=row.$id)!=translation[row.$id]
+    if !translation[row._id]
+      -console.log(`  \"${row._id}\": \"${row.text}\",`)
+    td.oracle-result(data-i18n=row._id)!=translation[row._id]
 

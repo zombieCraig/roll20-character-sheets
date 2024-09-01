@@ -11,19 +11,23 @@ mixin oraclePreviewToggle(type, name, id)
     )
     .btn-content.oracle-name=header.replace(/ - /i, ": ")
 
+// Called from pages/character/oracles
+// This seems to be for when there are multiple oracles in one (ie. pick a table/column) Which is probalby oraclecollections now
 mixin oracleRollGroup(group)
   .oracle-box.surface
     .oracle-title=group.name
-    each oracle in group.contents
+    - console.log ("RollGroup DEBUG: ",group.name)
+    each oracle, oracle_id in group.contents
       - const header = `${group.name} - ${oracle.name}`
       .oracle
         // TODO: May be a better check?
         if (oracle.oracle_type == "table_text") 
           - let buttonLabel = oracle.name
-          +oracleSubOraclesListGroupItem(oracle.$id, buttonLabel, oracle.rows)
+          +oracleSubOraclesListGroupItem(oracle_id, buttonLabel, oracle.rows)
         else
-          +oracleRollBtn(oracle.$id, oracle.name)
-    // TODO: Is this still relevant?
+          - console.log("Warning OracleRollGroup not table_text:", oracle.oracle_type)
+          +oracleRollBtn(oracle_id, oracle.name)
+    // TODO: Is this still relevant?  This maybe for subcollections??
     //- if group.Categories
     //-   each category in group.Categories
     //-     - const header = `${group.Name} - ${category.Name}`
@@ -41,15 +45,15 @@ mixin oracleRollGroup(group)
     //-     .oracle.oracle-subcategory
     //-       +oracleSubOraclesListGroupItem(subCategory.id, buttonLabel, subCategory.Oracles)
 
-mixin oraclePreview(oracle, groupName)
-  input(class=`${oracle.$id} hide-element` type='radio' name=`attr_oracle_preview` value=oracle.$id)
-  div(class=`${oracle.$id} showhide oracle-table-preview surface` id=oracle.$id)
-    - let nameString = oracle['Display name'] && oracle['Display name'].match(/ - /i) ? oracle['Display name'].replace(/ - /i, ": ") : `${groupName}: ${oracle.Name}`
+mixin oraclePreview(oracle, oracle_id, groupName)
+  input(class=`${oracle_id} hide-element` type='radio' name=`attr_oracle_preview` value=oracle_id)
+  div(class=`${oracle_id} showhide oracle-table-preview surface` id=oracle_id)
+    - let nameString = `${groupName}: ${oracle.name}`
     .oracle-title=nameString
-    if oracle.Table
+    if oracle.rows
       +oracleTable(oracle)
-    else if oracle.Tables
-      +oracleMultiSubTable(oracle)
+    //- else if oracle.Tables
+    //-   +oracleMultiSubTable(oracle)
     else if oracle.Oracles
       if (oracle.Description)
         .oracle-description!=oracle.Description

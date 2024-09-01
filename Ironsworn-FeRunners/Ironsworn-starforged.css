@@ -2655,6 +2655,61 @@
 .charsheet .column-wrap {
   width: 50%;
 }
+.charsheet input[type=radio].persona:checked ~ div.persona,
+.charsheet input[type=radio].positive_explorative:checked ~ div.positive_explorative,
+.charsheet input[type=radio].negative_explorative:checked ~ div.negative_explorative,
+.charsheet input[type=radio].positive_combat:checked ~ div.positive_combat,
+.charsheet input[type=radio].negative_combat:checked ~ div.negative_combat,
+.charsheet input[type=radio].type:checked ~ div.type,
+.charsheet input[type=radio].ability:checked ~ div.ability,
+.charsheet input[type=radio].character_path:checked ~ div.character_path,
+.charsheet input[type=radio].backstory_prompts:checked ~ div.backstory_prompts,
+.charsheet input[type=radio].action:checked ~ div.action,
+.charsheet input[type=radio].theme:checked ~ div.theme,
+.charsheet input[type=radio].descriptor:checked ~ div.descriptor,
+.charsheet input[type=radio].focus:checked ~ div.focus,
+.charsheet input[type=radio].story_complication:checked ~ div.story_complication,
+.charsheet input[type=radio].story_clue:checked ~ div.story_clue,
+.charsheet input[type=radio].influence:checked ~ div.influence,
+.charsheet input[type=radio].leadership_style:checked ~ div.leadership_style,
+.charsheet input[type=radio].corporate:checked ~ div.corporate,
+.charsheet input[type=radio].political:checked ~ div.political,
+.charsheet input[type=radio].underground:checked ~ div.underground,
+.charsheet input[type=radio].projects:checked ~ div.projects,
+.charsheet input[type=radio].relationships:checked ~ div.relationships,
+.charsheet input[type=radio].corporate_name:checked ~ div.corporate_name,
+.charsheet input[type=radio].political_name:checked ~ div.political_name,
+.charsheet input[type=radio].underground_name:checked ~ div.underground_name,
+.charsheet input[type=radio].quirks:checked ~ div.quirks,
+.charsheet input[type=radio].rumors:checked ~ div.rumors,
+.charsheet input[type=radio].segment:checked ~ div.segment,
+.charsheet input[type=radio].core_segment_node_type:checked ~ div.core_segment_node_type,
+.charsheet input[type=radio].corporate_segment_node_type:checked ~ div.corporate_segment_node_type,
+.charsheet input[type=radio].government_segment_node_type:checked ~ div.government_segment_node_type,
+.charsheet input[type=radio].underground_segment_node_type:checked ~ div.underground_segment_node_type,
+.charsheet input[type=radio].misc_node:checked ~ div.misc_node,
+.charsheet input[type=radio].node_popularity:checked ~ div.node_popularity,
+.charsheet input[type=radio].node_cluster_size:checked ~ div.node_cluster_size,
+.charsheet input[type=radio].node_cluster_theme:checked ~ div.node_cluster_theme,
+.charsheet input[type=radio].node_encounter:checked ~ div.node_encounter,
+.charsheet input[type=radio].system_area:checked ~ div.system_area,
+.charsheet input[type=radio].random:checked ~ div.random,
+.charsheet input[type=radio].damage:checked ~ div.damage,
+.charsheet input[type=radio].hub:checked ~ div.hub,
+.charsheet input[type=radio].hanging_out:checked ~ div.hanging_out,
+.charsheet input[type=radio].location_name:checked ~ div.location_name,
+.charsheet input[type=radio].fe_runner_handles:checked ~ div.fe_runner_handles,
+.charsheet input[type=radio].character_first_look:checked ~ div.character_first_look,
+.charsheet input[type=radio].character_disposition:checked ~ div.character_disposition,
+.charsheet input[type=radio].trademark_avatar:checked ~ div.trademark_avatar,
+.charsheet input[type=radio].character_role:checked ~ div.character_role,
+.charsheet input[type=radio].character_details:checked ~ div.character_details,
+.charsheet input[type=radio].character_goals:checked ~ div.character_goals {
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+  transition: 0.2s ease;
+}
 .charsheet .legacies {
   display: grid;
   grid-gap: 1em;
@@ -2890,40 +2945,40 @@
   margin: 0;
   height: auto;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-result-row {
+.sheet-rolltemplate-ferunners_oracles .sheet-result-row {
   padding: 0.5em;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-oracle-dice {
+.sheet-rolltemplate-ferunners_oracles .sheet-oracle-dice {
   align-self: center;
   margin-right: 0.5em;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-oracle-dice span {
+.sheet-rolltemplate-ferunners_oracles .sheet-oracle-dice span {
   border: 0px !important;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-oracle-double-dice {
+.sheet-rolltemplate-ferunners_oracles .sheet-oracle-double-dice {
   width: 5.7em;
   text-align: center;
   padding: 0.1em;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-oracle-double-dice span {
+.sheet-rolltemplate-ferunners_oracles .sheet-oracle-double-dice span {
   border: 0px !important;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-roll-container {
+.sheet-rolltemplate-ferunners_oracles .sheet-roll-container {
   background: #33323c;
   color: #fff;
   font-size: 1em;
   font-family: 'Montserrat', Arial, sans-serif;
   border: 1px solid #000;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-result-row {
+.sheet-rolltemplate-ferunners_oracles .sheet-result-row {
   display: flex;
   justify-content: space-between;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-roll-outcome {
+.sheet-rolltemplate-ferunners_oracles .sheet-roll-outcome {
   background: #403f4b;
   border: 1px solid #000;
 }
-.sheet-rolltemplate-starforged_oracles .inlinerollresult {
+.sheet-rolltemplate-ferunners_oracles .inlinerollresult {
   display: inline-block;
   min-width: 1.5em;
   text-align: center;
@@ -2931,11 +2986,11 @@
   background: transparent;
   border-radius: 1em;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-roll-outcome {
+.sheet-rolltemplate-ferunners_oracles .sheet-roll-outcome {
   background: #403f4b;
   border: 1px solid #000;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-subheader {
+.sheet-rolltemplate-ferunners_oracles .sheet-subheader {
   text-transform: uppercase;
   line-height: 1.5em;
   font-weight: 700;
@@ -2943,7 +2998,7 @@
   padding: 0.4em 1em 0.4em 1em;
   background-color: #23222b;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-subfooter {
+.sheet-rolltemplate-ferunners_oracles .sheet-subfooter {
   line-height: 1.5em;
   font-weight: 700;
   text-align: left;
@@ -2952,11 +3007,11 @@
   width: 100%;
   text-align: center;
 }
-.sheet-rolltemplate-starforged_oracles .sheet-result-body {
+.sheet-rolltemplate-ferunners_oracles .sheet-result-body {
   padding: 0.4em 1em 0.4em 1em;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-roll-container,
-.sheet-rolltemplate-starforged_progress .sheet-roll-container {
+.sheet-rolltemplate-ferunners_progress .sheet-roll-container {
   background: #33323c;
   color: #fff;
   font-size: 1em;
@@ -2964,12 +3019,12 @@
   border: 1px solid #000;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-result-row,
-.sheet-rolltemplate-starforged_progress .sheet-result-row {
+.sheet-rolltemplate-ferunners_progress .sheet-result-row {
   display: flex;
   justify-content: space-between;
 }
 .sheet-rolltemplate-ferunners_moves .inlinerollresult,
-.sheet-rolltemplate-starforged_progress .inlinerollresult {
+.sheet-rolltemplate-ferunners_progress .inlinerollresult {
   display: inline-block;
   min-width: 1.5em;
   text-align: center;
@@ -2977,29 +3032,29 @@
   background: transparent;
   border-radius: 1em;
 }
-.sheet-rolltemplate-starforged_progress .sheet-action-score .fullfail,
+.sheet-rolltemplate-ferunners_progress .sheet-action-score .fullfail,
 .sheet-rolltemplate-ferunners_moves .sheet-action-score .fullfail {
   border: 2px solid #d22e53;
 }
-.sheet-rolltemplate-starforged_progress .sheet-action-score .fullcrit,
+.sheet-rolltemplate-ferunners_progress .sheet-action-score .fullcrit,
 .sheet-rolltemplate-ferunners_moves .sheet-action-score .fullcrit {
   border: 2px solid #42829e;
 }
-.sheet-rolltemplate-starforged_progress .sheet-challenge-dice .fullcrit,
+.sheet-rolltemplate-ferunners_progress .sheet-challenge-dice .fullcrit,
 .sheet-rolltemplate-ferunners_moves .sheet-challenge-dice .fullcrit {
   border: 2px solid #d22e53;
 }
-.sheet-rolltemplate-starforged_progress .sheet-challenge-dice .fullfail,
+.sheet-rolltemplate-ferunners_progress .sheet-challenge-dice .fullfail,
 .sheet-rolltemplate-ferunners_moves .sheet-challenge-dice .fullfail {
   border: 2px solid #42829e;
 }
-.sheet-rolltemplate-starforged_progress .sheet-roll-outcome,
+.sheet-rolltemplate-ferunners_progress .sheet-roll-outcome,
 .sheet-rolltemplate-ferunners_moves .sheet-roll-outcome {
   background: #403f4b;
   border: 1px solid #000;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-subheader,
-.sheet-rolltemplate-starforged_progress .sheet-subheader {
+.sheet-rolltemplate-ferunners_progress .sheet-subheader {
   line-height: 1.5em;
   font-weight: 700;
   text-align: left;
@@ -3009,7 +3064,7 @@
   font-style: normal;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-subfooter,
-.sheet-rolltemplate-starforged_progress .sheet-subfooter {
+.sheet-rolltemplate-ferunners_progress .sheet-subfooter {
   line-height: 1.5em;
   font-weight: 700;
   text-align: left;
@@ -3019,53 +3074,53 @@
   font-style: italic;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-result-body,
-.sheet-rolltemplate-starforged_progress .sheet-result-body {
+.sheet-rolltemplate-ferunners_progress .sheet-result-body {
   padding: 0.4em 1em 0.4em 1em;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-alert,
-.sheet-rolltemplate-starforged_progress .sheet-alert {
+.sheet-rolltemplate-ferunners_progress .sheet-alert {
   margin: 0.2em 0.3em 0.2em 0.3em;
   border-radius: 1em;
   width: auto;
   padding: 0.5em;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-opportunity,
-.sheet-rolltemplate-starforged_progress .sheet-opportunity {
+.sheet-rolltemplate-ferunners_progress .sheet-opportunity {
   width: 1em;
   margin: 0.3em 0.5em 0.3em 0.3em;
   border-radius: 1em;
   background-color: #40819f;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-strong-hit,
-.sheet-rolltemplate-starforged_progress .sheet-strong-hit {
+.sheet-rolltemplate-ferunners_progress .sheet-strong-hit {
   width: 1em;
   margin: 0.3em 0.5em 0.3em 0.3em;
   border-radius: 1em;
   background-color: #63a9ca;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-weak-hit,
-.sheet-rolltemplate-starforged_progress .sheet-weak-hit {
+.sheet-rolltemplate-ferunners_progress .sheet-weak-hit {
   width: 1em;
   margin: 0.3em 0.5em 0.3em 0.3em;
   border-radius: 1em;
   background-color: #83dbff;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-miss,
-.sheet-rolltemplate-starforged_progress .sheet-miss {
+.sheet-rolltemplate-ferunners_progress .sheet-miss {
   width: 1em;
   margin: 0.3em 0.5em 0.3em 0.3em;
   border-radius: 1em;
   background-color: #d8566f;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-complication,
-.sheet-rolltemplate-starforged_progress .sheet-complication {
+.sheet-rolltemplate-ferunners_progress .sheet-complication {
   width: 1em;
   margin: 0.3em 0.5em 0.3em 0.3em;
   border-radius: 1em;
   background-color: #d22e53;
 }
 .sheet-rolltemplate-ferunners_moves .userscript-tcat,
-.sheet-rolltemplate-starforged_progress .userscript-tcat {
+.sheet-rolltemplate-ferunners_progress .userscript-tcat {
   font-weight: 700;
 }
 .sheet-rolltemplate-ferunners_moves .sheet-momentum-title {

@@ -6,10 +6,13 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const merge = require('gulp-merge-json');
+const showdown = require('showdown');
+const through2 = require('through2');
 const { ferunners } = require('dataforged')
-const { buildAssetTranslations, buildOracleTranslations } = require('./buildTranslations')
+//const { buildAssetTranslations, buildOracleTranslations } = require('./buildTranslations')
 
 axios.defaults.baseURL = 'https://raw.githubusercontent.com/zombieCraig/datasworn/fe_runners/datasworn/fe_runners/';
+
 
 gulp.task('dataforge', async function() {
   const apiData = {
@@ -20,9 +23,11 @@ gulp.task('dataforge', async function() {
     core: apiData.core.data,
   };
 
+  // TODO: This needs to be redone to pull from the datasworn.json and check to see if there is a defined translation for a string
+  //       When not found, then export some defaults to use.
   const translationData = {
-    'translation-assets': buildAssetTranslations(),
-    'translation-oracles': buildOracleTranslations()
+    // 'translation-assets': buildAssetTranslations(),
+    // 'translation-oracles': buildOracleTranslations()
   };
 
   for (let key in rawData) {
@@ -37,6 +42,27 @@ gulp.task('dataforge', async function() {
     console.log(fileName);
     fs.writeFileSync(fileName, JSON.stringify(data, null, 2));
   }
+});
+
+gulp.task('convert-markdown', function() {
+  const converter = new showdown.Converter();
+
+  return gulp.src('./app/data/core.json')
+    .pipe(through2.obj(function(file, _, cb) {
+      if (file.isBuffer()) {
+        const core = JSON.parse(file.contents.toString());
+        Object.entries(core.moves).forEach(([key, group]) => {
+          Object.entries(group.contents).forEach(([moveName, moveData]) => {
+            if (typeof moveData.text === 'string') {
+              moveData.text = converter.makeHtml(moveData.text);
+            }
+          });
+        });
+        file.contents = Buffer.from(JSON.stringify(core, null, 2));
+      }
+      cb(null, file);
+    }))
+    .pipe(gulp.dest('./app/data'));
 });
 
 gulp.task('mergeTranslation', function() {
@@ -102,5 +128,5 @@ gulp.task(
 
 gulp.task(
   'build',
-  gulp.series(['dataforge', 'mergeTranslation', 'data', 'css', 'html'])
+  gulp.series(['dataforge', 'convert-markdown', 'mergeTranslation', 'data', 'css', 'html'])
 );

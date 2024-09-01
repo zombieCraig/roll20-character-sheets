@@ -1,11 +1,11 @@
 mixin progressRoll(opts, visibility)
-  - var formattedName = _.kebabCase(opts.Name)
+  - var formattedName = _.kebabCase(opts.name)
   button(
     type="roll"
-    title=opts.Name
+    title=opts.name
     name=`roll_${formattedName}`
     class=visibility
-    value=`&{template:starforged_progress} {{header=@{character_name}}} {{progress_name=${opts.Name}}} {{progress=[[?{Filled Progress|0}]]}} {{challenge1=[[d10]]}} {{challenge2=[[d10]]}}`
+    value=`&{template:ferunners_progress} {{header=@{character_handle}}} {{progress_name=${opts.name}}} {{progress=[[?{Filled Progress|0}]]}} {{challenge1=[[d10]]}} {{challenge2=[[d10]]}}`
   )
 
 mixin oracleRoll(opts, visibility)
@@ -14,18 +14,32 @@ mixin oracleRoll(opts, visibility)
     title=opts.title
     name=`roll_${opts.name}`
     class=visibility
-    value=`&{template:starforged_oracles} {{header=${translation[opts.title]}}} {{${opts.name}=[[d100]]}}`
+    value=`&{template:ferunners_oracles} {{header=${translation[opts.title]}}} {{${opts.name}=[[d100]]}}`
   )
 
 mixin movesRoll(opts, visibility)
-  - var formattedName = _.kebabCase(opts.Name)
-  - var roll20MoveData = rolls[opts.Name]
+  - var formattedName = _.kebabCase(opts.name)
+  - var roll20MoveData = "?{Stat"
+  - var repeat_stat = "?{Stat}"
+  // Dynamically build the Roll Query
+  for condition in opts.trigger.conditions
+    if condition.roll_options
+      for opt in condition.roll_options
+        if opt.using == "stat"
+          if opts.trigger.conditions.length == 1
+            - roll20MoveData = `@{${opt.stat}`
+            - repeat_stat = `@{${opt.stat}}`
+          else
+            - var statBlock = `|&amp;#65122;${opt.stat},@{${opt.stat}}`
+            - roll20MoveData = `${roll20MoveData}${statBlock}`
+  - roll20MoveData = `${roll20MoveData}}`
+  //- console.log("DEBUG roll20MoveData = ", roll20MoveData)
   button(
     type="roll"
-    title=`${opts.Name} Move`
+    title=`${opts.name} Move`
     class=visibility
     name=`roll_${formattedName}`
-    value!=`&{template:ferunners_moves} {{header=@{character_name}}} {{name=${opts.Name}}} {{action=[[{d6+${roll20MoveData.stat}+(?{Modifier|0}),{10}}kl1]]}} {{negate1=[[1+${roll20MoveData.repeat_stat}+(?{Modifier|0})]]}} {{negate2=[[2+${roll20MoveData.repeat_stat}+(?{Modifier|0})]]}} {{negate3=[[3+${roll20MoveData.repeat_stat}+(?{Modifier|0})]]}} {{negate4=[[4+${roll20MoveData.repeat_stat}+(?{Modifier|0})]]}} {{negate5=[[5+${roll20MoveData.repeat_stat}+(?{Modifier|0})]]}} {{negate6=[[6+${roll20MoveData.repeat_stat}+(?{Modifier|0})]]}} {{challenge1=[[d10]]}} {{challenge2=[[d10]]}} {{momentum=[[@{momentum}]]}} {{modifiers=[[${roll20MoveData.repeat_stat}+(?{Modifier|0})]]}} {{add=[[(?{Modifier|0})]]}} {{stat=[[${roll20MoveData.repeat_stat}]]}}`
+    value!=`&{template:ferunners_moves} {{header=@{character_handle}}} {{name=${opts.name}}} {{action=[[{d6+${roll20MoveData}+(?{Modifier|0}),{10}}kl1]]}} {{negate1=[[1+${repeat_stat}+(?{Modifier|0})]]}} {{negate2=[[2+${repeat_stat}+(?{Modifier|0})]]}} {{negate3=[[3+${repeat_stat}+(?{Modifier|0})]]}} {{negate4=[[4+${repeat_stat}+(?{Modifier|0})]]}} {{negate5=[[5+${repeat_stat}+(?{Modifier|0})]]}} {{negate6=[[6+${repeat_stat}+(?{Modifier|0})]]}} {{challenge1=[[d10]]}} {{challenge2=[[d10]]}} {{momentum=[[@{momentum}]]}} {{modifiers=[[${repeat_stat}+(?{Modifier|0})]]}} {{add=[[(?{Modifier|0})]]}} {{stat=[[${repeat_stat}]]}}`
   )
 
 mixin customRoll(opts, visibility)

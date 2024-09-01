@@ -23,9 +23,9 @@ mixin oraclesPage
               +oracleRollGroup(group)
 
           .oracle-column.table-main
-            each group in core.oracles
-              each oracle in group.contents
-                +oraclePreview(oracle, group.name)
-              if group.Categories
-                each subcategory in group.Categories
-                  +oraclePreview(subcategory, group.name)
+            each group, group_id in core.oracles
+              each oracle, oracle_id in group.contents
+                +oraclePreview(oracle, oracle_id, group.name)
+              if group.categories
+                each subcategory, subcategory_id in group.categories
+                  +oraclePreview(subcategory, subcategory_id, group.name)

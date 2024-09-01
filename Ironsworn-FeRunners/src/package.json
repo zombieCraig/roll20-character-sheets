@@ -19,6 +19,8 @@
     "gulp": "5.0.0",
     "gulp-pug": "5.0.0",
     "gulp-stylus": "2.7.0",
+    "showdown": "2.1.0",
+    "through2": "4.0.2",
     "pug": "3.0.2",
     "pug-cli": "1.0.0-alpha6",
     "pug-lint": "2.6.0",

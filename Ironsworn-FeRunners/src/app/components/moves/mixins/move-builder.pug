@@ -8,24 +8,35 @@ mixin movePreviewFactory(move, move_key, options)
     if move.oracles
       .move-oracle-container
         - let btnText = `Roll the ${move.name} oracle`
-        - //var moveOracle = oracles.find(group => { return group.Name === 'Moves' }).Oracles.find(oracle => { return oracle.Name === move.name })
+        //- var moveOracle = oracles.find(group => { return group.Name === 'Moves' }).Oracles.find(oracle => { return oracle.Name === move.name })
         each oracle_data, oracle_name in move.oracles
           if oracle_data.oracle_type == "table_text"
-            +oracleSingleButton(oracle_data, btnText)
+            - console.log("ORACLE DEBUG: ", oracle_name)
+            +oracleSingleButton(oracle_data, oracle_name, btnText)
             +oracleTable(oracle_data)
+          else 
+            - console.log("TODO: oracle_type=",oracle_data.oracle_type)
           // TODO: Support more complex oracles
           //- else if moveOracle.Oracles
           //-   +oracleMultiBtn(moveOracle)
           //-   +oracleMultiSubTable(moveOracle, btnText)
 
 mixin movePreview(move, move_key, options)
+  - console.log("============DEBUG: MOVE:", move_key)
   if options.no_title
     div
   else
-    div.move-title.move-preview=move.Name
+    div.move-title.move-preview=move.name
       if move.roll_type == "progress_roll"
         span.move-progress-label='Progress Move'
-  - const statCheck = move.trigger.conditions.find(condition => { return condition.roll_options.stat })
+  - var statCheck = false
+  for condition in move.trigger.conditions
+    if condition.roll_options
+      for opt in condition.roll_options
+        if opt.using == "stat"
+          - statCheck = true
+        else
+          - console.log("TODO: ", move_key, " Stat.using=",opt.using)
   if move.roll_type == "progress_roll"
     +rollLabel
       +progressRoll(move, 'hide-element')
