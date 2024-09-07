@@ -24,8 +24,8 @@ mixin oraclesPage
 
           .oracle-column.table-main
             each group, group_id in core.oracles
-              each oracle, oracle_id in group.contents
-                +oraclePreview(oracle, oracle_id, group.name)
+              each oracle, oracle_key in group.contents
+                +oraclePreview(oracle, oracle._id, group.name)
               if group.categories
-                each subcategory, subcategory_id in group.categories
-                  +oraclePreview(subcategory, subcategory_id, group.name)
+                each subcategory, subcategory_key in group.categories
+                  +oraclePreview(subcategory, subcategory._id, group.name)

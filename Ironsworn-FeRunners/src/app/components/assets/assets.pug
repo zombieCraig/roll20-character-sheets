@@ -3,51 +3,26 @@ include ./asset-builder
 include ./asset-builder-legacy
 
 mixin assets()
-  input(class=`hide-element legacy-button-box` type='checkbox' name=`attr_hide_legacy_assets_button_box`)
-  .legacy-button-box.hide-element
-    - const i18nDesc = 'legacy-assets-description'
-    p.legacy-assets-text(data-i18n=i18nDesc)=translation[i18nDesc]
-    .legacy-assets-actions
-      +btn({type: 'checkbox', text: 'TOGGLE LEGACY ASSETS', classes: 'legacy-assets-button', translationId: 'legacy-assets-toggle-btn', attribute: `legacy_assets_toggle`, action: 'toggle', checked: true})
-      +btn({type: 'checkbox', text: 'HIDE THIS BOX', classes: 'legacy-assets-button', translationId: 'hide-legacy-button-box', attribute: `hide_legacy_assets`, action: 'static'})
+  //- input(class=`hide-element legacy-button-box` type='checkbox' name=`attr_hide_legacy_assets_button_box`)
+  //- .legacy-button-box.hide-element
+  //-   - const i18nDesc = 'legacy-assets-description'
+  //-   p.legacy-assets-text(data-i18n=i18nDesc)=translation[i18nDesc]
+  //-   .legacy-assets-actions
+  //-     +btn({type: 'checkbox', text: 'TOGGLE LEGACY ASSETS', classes: 'legacy-assets-button', translationId: 'legacy-assets-toggle-btn', attribute: `legacy_assets_toggle`, action: 'toggle', checked: true})
+  //-     +btn({type: 'checkbox', text: 'HIDE THIS BOX', classes: 'legacy-assets-button', translationId: 'hide-legacy-button-box', attribute: `hide_legacy_assets`, action: 'static'})
 
-  - let onAssetsPage = ["module", "path", "companion"];  // For now doing this manually
+  - let moduleAssetList = core.assets.module.contents
+  - let pathAssetList = core.assets.path.contents
+  - let companionAssetList = core.assets.companion.contents
+  - let AssetList = [ moduleAssetList, pathAssetList, companionAssetList ]
+  - let finalArrayList = Object.assign({}, ...AssetList)
   .assets
     fieldset.repeating_assets-final.fixed-width
       .asset.surface
-        - let moduleAssetList = core.assets.module.contents
-        +genericAssetBuilder(moduleAssetList, 'assetList')
+        +genericAssetBuilder(finalArrayList, 'assetList')
         +customAssets
     .hidden-fields.hide-element
-      each asset, asset_name in moduleAssetList
-        - let assetClassName = asset_name
-        each ability, index in asset.abilities
-          - let assetAbility = `asset-'${assetClassName}-ability-${index + 1}',`
-        input(class=`hide-element` type='checkbox' name=`attr_${assetClassName}`)
-  .assets
-    fieldset.repeating_assets-final.fixed-width
-      .asset.surface
-        //- let assetsArray = core.assets.filter((assetGroup) => onAssetsPage.includes(assetGroup["Name"]))
-        - let finalisedAssetList = core.assets.path.contents
-        //- let finalisedAssetList = assetsArray.map((assetGroup) => assetGroup.Assets).flat()
-        +genericAssetBuilder(finalisedAssetList, 'assetList')
-        +customAssets
-    .hidden-fields.hide-element
-      each asset, asset_name in finalisedAssetList
-        - let assetClassName = asset_name
-        each ability, index in asset.abilities
-          - let assetAbility = `asset-'${assetClassName}-ability-${index + 1}',`
-          //- For Testing Purposes
-          //- - console.log(asset.id)
-        input(class=`hide-element` type='checkbox' name=`attr_${assetClassName}`)
-  .assets
-    fieldset.repeating_assets-final.fixed-width
-      .asset.surface
-        - let companionAssetList = core.assets.companion.contents
-        +genericAssetBuilder(companionAssetList, 'assetList')
-        +customAssets
-    .hidden-fields.hide-element
-      each asset, asset_name in companionAssetList
+      each asset, asset_name in finalArrayList
         - let assetClassName = asset_name
         each ability, index in asset.abilities
           - let assetAbility = `asset-'${assetClassName}-ability-${index + 1}',`

@@ -19,7 +19,7 @@ include ../../components/assets/asset-builder
 
 mixin rigPage(sheetType)
   div.page-container
-    input(type='radio' name=`attr_${sheetType}_page` class='rig hide-element' value='8')
+    input(type='radio' name=`attr_character_page` class='rig hide-element' value='8')
     div.rig.showhide
       .rig-grid
         .asset.surface
@@ -36,10 +36,11 @@ mixin rigPage(sheetType)
               })
           h3.i18n-text(data-i18n='resource-rig-integrity')=translation['resource-rig-integrity']
           .info
-            +track(baseRig.controls.integrity, `${sheetType}_rig`)
+            +track(baseRig.controls.integrity, `character_rig`)
           h3.i18n-text(data-i18n='impacts')=translation['impacts']
           .info
-            - const rigImpacts = baseRig.controls.integrity.controls
+            //- - const rigImpacts = baseRig.controls.integrity.controls
+            - const rigImpacts = [impacts.find(obj => { return obj.title === 'rig' })]
             +impacts(rigImpacts, {character: true, noContainer: true})
 
         .rig-category-modules

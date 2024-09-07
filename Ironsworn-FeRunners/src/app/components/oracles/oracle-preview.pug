@@ -17,16 +17,16 @@ mixin oracleRollGroup(group)
   .oracle-box.surface
     .oracle-title=group.name
     - console.log ("RollGroup DEBUG: ",group.name)
-    each oracle, oracle_id in group.contents
+    each oracle, oracle_key in group.contents
       - const header = `${group.name} - ${oracle.name}`
       .oracle
-        // TODO: May be a better check?
-        if (oracle.oracle_type == "table_text") 
+        // TODO: May be a better check?  SubOracle is for multiple tables
+        if (oracle.oracle_type == "table_textX") 
           - let buttonLabel = oracle.name
-          +oracleSubOraclesListGroupItem(oracle_id, buttonLabel, oracle.rows)
+          +oracleSubOraclesListGroupItem(oracle._id, buttonLabel, oracle.rows)
         else
-          - console.log("Warning OracleRollGroup not table_text:", oracle.oracle_type)
-          +oracleRollBtn(oracle_id, oracle.name)
+          //- console.log("Warning OracleRollGroup not table_text:", oracle.oracle_type)
+          +oracleRollBtn(oracle._id, oracle.name)
     // TODO: Is this still relevant?  This maybe for subcollections??
     //- if group.Categories
     //-   each category in group.Categories
@@ -54,10 +54,10 @@ mixin oraclePreview(oracle, oracle_id, groupName)
       +oracleTable(oracle)
     //- else if oracle.Tables
     //-   +oracleMultiSubTable(oracle)
-    else if oracle.Oracles
-      if (oracle.Description)
-        .oracle-description!=oracle.Description
-      each subCatOracle, index in oracle.Oracles
+    else if oracle.oracles
+      if (oracle.description)
+        .oracle-description!=oracle.description
+      each subCatOracle, index in oracle.oracles
         if subCatOracle.Table
           +oracleSubTable(subCatOracle)
         else if subCatOracle.Tables

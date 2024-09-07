@@ -1,7 +1,7 @@
 mixin ability(asset, ability, number, name)
   - var abilityId = `${name}_${number}`
   .flex-container
-    if ability.Enabled
+    if ability.enabled
       input.asset-ability(
         type='checkbox'
         name=`attr_ability_checkbox_${abilityId}`
@@ -12,9 +12,11 @@ mixin ability(asset, ability, number, name)
         type='checkbox'
         name=`attr_assetcheckbox_${abilityId}${number}`
       )
+    //-   - console.log(`  "asset-${name}-ability-${number}": "${ability.text}",`)
     - var translationAbility = `asset-${name}-ability-${number}`
     - var assetBodyPlaceholder=translation[translationAbility]
-    - var hasClock = ability.Inputs?.find((field) => {  return field['Input Type'] === 'Clock' })
+    // TODO FIXME - Update to 0.1.0
+    - var hasClock = ability.inputs?.find((field) => {  return field['Input Type'] === 'Clock' })
     if hasClock
       .asset-ability.flex
         +ability-inputs(asset, ability, number, name, translationAbility, assetBodyPlaceholder)
@@ -22,9 +24,11 @@ mixin ability(asset, ability, number, name)
       .asset-ability
         +ability-inputs(asset, ability, number, name, translationAbility, assetBodyPlaceholder)
 
+
+// TODO FIXME update for v0.1.0
 mixin ability-inputs(asset, ability, number, name, translationAbility, assetBodyPlaceholder)
   div.i18n-text(data-i18n=translationAbility) !{assetBodyPlaceholder}
-  if ability.Inputs
+  if ability.inputs
     each field in ability.Inputs
       if field['Input Type'] === 'Text'
         - var translationAbilityField = `asset-${name}-ability-${number}-${_.kebabCase(field.Name)}`
@@ -46,9 +50,9 @@ mixin requirement(asset, key)
 mixin field(field, assetName)
   .write-in-container
     .i18n-text.asset-write-in.asset-name(
-      data-i18n=`asset-${assetName}-textinput-${_.kebabCase(field.Name)}`
-    )=translation[`asset-${assetName}-textinput-${_.kebabCase(field.Name)}`]
-    input.border-bottom.no-border(type='text' name=`attr_field-${_.kebabCase(field.Name)}` value='')
+      data-i18n=`asset-${assetName}-textinput-${_.kebabCase(field.label)}`
+    )=translation[`asset-${assetName}-textinput-${_.kebabCase(field.lebel)}`]
+    input.border-bottom.no-border(type='text' name=`attr_field-${_.kebabCase(field.lebel)}` value='')
 
 mixin clock(field, assetName)
   .harm-section
@@ -112,7 +116,7 @@ mixin track(track, assetName)
         - currentTrack++
 
 mixin assetTemplate(asset, options)
-  - let name = _.kebabCase(asset.Name)
+  - let name = _.kebabCase(asset.name)
   //- let category = _.kebabCase(asset["Asset Type"].replace('Starforged/Assets/', '').replace('_', ' '))
   - let category = asset.category
   if options.visiblityToggle === true
@@ -121,12 +125,12 @@ mixin assetTemplate(asset, options)
     .asset-content-header
       .asset-details
         .category=asset.category
-        span.asset-name=asset.Name
+        span.asset-name=asset.name
       .background-svg
-    if asset.Requirement
+    if asset.requirement
       +requirement(asset, name)
-    if asset.Inputs
-      each field in asset.Inputs
+    if asset.options
+      each field in asset.options
         +field(field, name)
     .flex-wrapper
       each ability, index in asset.abilities
@@ -145,10 +149,11 @@ mixin genericAssetBuilder(assetsArray, listId)
     - console.log("Generating", len, "assets")
     each asset, asset_name in assetsArray
       //- let assetId = asset.Name.replace(" ", "-").toLowerCase()
-      - let assetId = asset_name
+      - let assetId = asset_name.replace(/_/g, "-")
       - console.log("Generating", assetId)
       //- generates classes and outputs to stdout
       //- - console.log(`input[type=checkbox].${assetId}:checked ~ div.${assetId},`)
+      //- - console.log(`  "asset-${assetId}-name": "${asset.name}",`)
       option.i18n-text(data-i18n=`asset-${assetId}-name` value=assetId) !{translation[`asset-${assetId}-name`]}
     option.i18n-text(data-i18n=`asset-custom-name` value='custom') !{translation["asset-custom-name"]}
 

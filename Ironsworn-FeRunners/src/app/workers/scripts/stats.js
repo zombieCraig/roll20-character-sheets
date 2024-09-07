@@ -22,15 +22,15 @@ on('change:spirit', function(eventinfo) {
   });
 });
 
-//Cannot increase Supply while Unprepared
-//Supply reaching 0 marks Unprepared
+//Cannot increase Supply while Unregulated
+//Supply reaching 0 marks Unregulated
 on('change:supply', function(eventinfo) {
-  getAttrs(['impactUnprepared'], function(values) {
-    if (values.unprepared == 'on') {
+  getAttrs(['impactRegulated'], function(values) {
+    if (values.unregulated == 'on') {
       if (parseInt(eventinfo.newValue) > parseInt(eventinfo.previousValue)) {
         setAttrs({ supply: eventinfo.previousValue });
       }
     }
   });
-  if (parseInt(eventinfo.newValue) === 0) setAttrs({ impactUnprepared: 'on' });
+  if (parseInt(eventinfo.newValue) === 0) setAttrs({ impactRegulated: 'on' });
 });

@@ -44,16 +44,16 @@ mixin oracleMultiSubTable(oracle, header=false)
         mergedRows.push(newRow);
       })
     }
-  if oracle.Description
-    .oracle-description!=oracle.Description
+  if oracle.description
+    .oracle-description!=oracle.description
   table.oracle-table.oracle-subtable.oracle-subtable-multi
     thead
       if (header===true)
         tr
-          th.oracle-subtitle(colspan=(oracle.Oracles.length+1))=oracle.Name
+          th.oracle-subtitle(colspan=(oracle.oracles.length+1))=oracle.name
       tr
-        each subOracle in oracle.Oracles
-          th.oracle-column-head.oracle-roll=subOracle.Name.replace(/^.* - /g, "")
+        each subOracle in oracle.oracles
+          th.oracle-column-head.oracle-roll=subOracle.name.replace(/^.* - /g, "")
         th.oracle-column-head.oracle-roll=`Result`
     each row, index in mergedRows
       +oracleTableRow(mergedRows, row, index)

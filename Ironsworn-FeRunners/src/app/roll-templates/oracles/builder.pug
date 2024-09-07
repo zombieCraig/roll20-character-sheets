@@ -18,8 +18,9 @@ mixin oracleRoll(id, table, row)
     |
     | {{/rollBetween() #{id} #{chanceFloor} #{chanceCeiling}}}
 
-mixin oracleTemplate(oracle, oracle_id)
-  - const id = oracle_id;
+mixin oracleTemplate(oracle, oracle_key)
+  - const id = oracle._id;
+  - console.log("====== OracleTemplate ",oracle_key, id)
   |
   | {{##{id}}}
   .sheet-result-row
@@ -40,7 +41,7 @@ mixin oracleTemplate(oracle, oracle_id)
       else if oracle.Oracles
         - let counter = 0;
         //- uses a counter instead of index to better handle any nested subtables
-        - console.log("WARNING: I don't think we have oracle.Oracles done yet... ", oracle_id)
+        - console.log("WARNING: I don't think we have oracle.Oracles done yet... ", oracle_key)
         each subCatOracle in oracle.Oracles
           if subCatOracle.Table
             |
@@ -60,7 +61,7 @@ mixin oracleTemplate(oracle, oracle_id)
               | {{/rollTotal() tableChoice #{counter}}}
               - counter++
       else
-        - console.log("Warning parsed", oracle_id, "without detecting rows")
+        - console.log("Warning parsed", oracle_key, "without detecting rows")
 
 
 
@@ -76,8 +77,8 @@ rolltemplate(class=`sheet-rolltemplate-ferunners_oracles`)
     | {{/custom-oracle}}
 
     each category, category_id in core.oracles
-      each oracle, oracle_id in category.contents
-        +oracleTemplate(oracle, oracle_id)
+      each oracle, oracle_key in category.contents
+        +oracleTemplate(oracle, oracle_key)
         if oracle.collections
-          each subCategory, subCategory_id in oracle.collections
-            +oracleTemplate(subCategory, subCategory_id)
+          each subCategory, subCategory_key in oracle.collections
+            +oracleTemplate(subCategory, subCategory_key)

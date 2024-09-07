@@ -14,7 +14,7 @@ mixin oracleSubOraclesListGroupItem(id, buttonLabel, rows)
         })
         return `${table['name']},?{${table['Name']}&#124;${subOracleOptions.join('&#124;')}&#125;`
       } else {
-        return `${table['name']},${count++}`
+        return `${table.text},${count++}`
       }
     })
 
@@ -23,7 +23,7 @@ mixin oracleSubOraclesListGroupItem(id, buttonLabel, rows)
 
 mixin oracleRollBtn(id, buttonLabel, rollQuery="")
   //- generates CSS
-  - console.log(`input[type=radio].${id}:checked ~ div.${id},`)
+  //- console.log(`input[type=radio].${id}:checked ~ div.${id},`)
   -
     let valueString = `&{template:ferunners_oracles} ${rollQuery} {{${id}=[[d100]]}}`;
     if (!rollQuery.match(/header=/i)) {
@@ -45,6 +45,7 @@ mixin oracleRollBtn(id, buttonLabel, rollQuery="")
       value=id
     )
     .btn-content.oracle-name=buttonLabel.replace(/ - /i, ": ")
+  //- - console.log("  oracleRollBtn valueString=",valueString)
 
 mixin oracleMultiBtn(oracle, btnText, indexOffset=0)
   -
@@ -59,7 +60,7 @@ mixin oracleMultiBtn(oracle, btnText, indexOffset=0)
         return `${table['Name']},${index+indexOffset}`
       }
     })
-    console.log('opt 2', options)
+    //- console.log('opt 2', options)
     const rollQuery = `{{tableChoice=[[(?{Choose Table|${options.join('|')}})]]}} {{header=${labelText}}}`
     const id = oracle.$id
   label.roll-label.embedded-btn=btnText||labelText
@@ -72,8 +73,8 @@ mixin oracleMultiBtn(oracle, btnText, indexOffset=0)
 
 mixin oracleSingleButton(oracle, oracle_key, btnText)
   - const labelText=oracle.name
-  - const id = oracle_key
-  - console.log("ORACLE DEBUG: ID=", id)
+  - const id = oracle._id
+  //- - console.log("ORACLE DEBUG: ID=", id)
   label.roll-label.surface-2.embedded-btn=btnText||labelText
     button.hide-element(
       type='roll'
